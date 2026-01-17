@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>DramaBox API Documentation</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎭</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-theater-masks"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>DramaBox API</h1>
+                    <p class="tagline">Interactive Documentation</p>
+                </div>
+            </div>
+            
+            <div class="server-info">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <i class="fas fa-server"></i>
+                        <div>
+                            <small>Server</small>
+                            <strong id="serverPort">Port 3000</strong>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-code"></i>
+                        <div>
+                            <small>Config</small>
+                            <strong>config.js</strong>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-bug"></i>
+                        <div>
+                            <small>Debug</small>
+                            <strong id="debugStatus">Checking...</strong>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <small>Uptime</small>
+                            <strong id="uptime">0s</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Quick Test Section -->
+            <section class="card quick-test">
+                <div class="card-header">
+                    <h2><i class="fas fa-bolt"></i> Quick API Test</h2>
+                    <span class="badge">Live</span>
+                </div>
+                <div class="card-body">
+                    <div class="input-group">
+                        <div class="input-with-icon">
+                            <i class="fas fa-link"></i>
+                            <input type="text" id="quickEndpoint" 
+                                   placeholder="/api/drama/list?pageNo=1" 
+                                   autocomplete="off">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-primary" onclick="quickTest()">
+                                <i class="fas fa-play"></i> Test
+                            </button>
+                            <button class="btn btn-secondary" onclick="quickTest(true)">
+                                <i class="fas fa-code"></i> Pretty
+                            </button>
+                            <button class="btn btn-outline" onclick="clearQuickTest()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="response-container">
+                        <div class="response-header">
+                            <span>Response Preview</span>
+                            <button class="btn-icon" onclick="copyResponse('quick')">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                        <div class="response-box" id="response-quick">
+                            <div class="placeholder">
+                                <i class="fas fa-arrow-down"></i>
+                                <p>Response will appear here</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- API Endpoints Grid -->
+            <div class="grid-container">
+                <!-- Drama Endpoints -->
+                <section class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-film"></i> Drama Endpoints</h2>
+                        <span class="badge">6 endpoints</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="endpoint-list">
+                            <!-- Drama List -->
+                            <div class="endpoint-item">
+                                <div class="method get">GET</div>
+                                <div class="endpoint-info">
+                                    <code>/api/drama/list</code>
+                                    <p>Get paginated list of dramas</p>
+                                    <div class="params">
+                                        <span class="param">pageNo <em>(number)</em></span>
+                                        <span class="param">log <em>(boolean)</em></span>
+                                    </div>
+                                    <div class="actions">
+                                        <button class="btn btn-sm" onclick="testDramaList()">
+                                            <i class="fas fa-play"></i> Test
+                                        </button>
+                                        <input type="number" id="dramaListPage" placeholder="Page" value="1" min="1">
+                                        <select id="dramaListLog">
+                                            <option value="false">Log: Off</option>
+                                            <option value="true">Log: On</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Drama Detail -->
+                            <div class="endpoint-item">
+                                <div class="method get">GET</div>
+                                <div class="endpoint-info">
+                                    <code>/api/drama/:bookId</code>
+                                    <p>Get details of a specific drama</p>
+                                    <div class="params">
+                                        <span class="param">bookId <em>(required)</em></span>
+                                        <span class="param">needRecommend <em>(boolean)</em></span>
+                                    </div>
+                                    <div class="actions">
+                                        <button class="btn btn-sm" onclick="testDramaDetail()">
+                                            <i class="fas fa-play"></i> Test
+                                        </button>
+                                        <input type="text" id="dramaDetailId" placeholder="Book ID" value="1">
+                                        <select id="dramaDetailRecommend">
+                                            <option value="false">No Rec</option>
+                                            <option value="true">With Rec</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Add more endpoints similarly... -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Chapter Endpoints -->
+                <section class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-book-open"></i> Chapter Endpoints</h2>
+                        <span class="badge">2 endpoints</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="endpoint-list">
+                            <!-- Chapter List -->
+                            <div class="endpoint-item">
+                                <div class="method get">GET</div>
+                                <div class="endpoint-info">
+                                    <code>/api/chapter/:bookId</code>
+                                    <p>Get chapters of a drama</p>
+                                    <div class="params">
+                                        <span class="param">bookId <em>(required)</em></span>
+                                        <span class="param">log <em>(boolean)</em></span>
+                                    </div>
+                                    <div class="actions">
+                                        <button class="btn btn-sm" onclick="testChapterList()">
+                                            <i class="fas fa-play"></i> Test
+                                        </button>
+                                        <input type="text" id="chapterListId" placeholder="Book ID" value="1">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Batch Download -->
+                            <div class="endpoint-item">
+                                <div class="method post">POST</div>
+                                <div class="endpoint-info">
+                                    <code>/api/chapter/batch-download</code>
+                                    <p>Batch download multiple chapters</p>
+                                    <div class="params">
+                                        <span class="param">bookId <em>(required)</em></span>
+                                        <span class="param">chapterIdList <em>(array)</em></span>
+                                    </div>
+                                    <div class="actions">
+                                        <button class="btn btn-sm" onclick="testBatchDownload()">
+                                            <i class="fas fa-play"></i> Test
+                                        </button>
+                                        <input type="text" id="batchBookId" placeholder="Book ID" value="1">
+                                        <input type="text" id="batchChapterIds" placeholder="[1,2,3]" value="[1,2,3]">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Search Endpoints -->
+                <section class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-search"></i> Search Endpoints</h2>
+                        <span class="badge">2 endpoints</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="endpoint-list">
+                            <!-- Search Drama -->
+                            <div class="endpoint-item">
+                                <div class="method get">GET</div>
+                                <div class="endpoint-info">
+                                    <code>/api/search</code>
+                                    <p>Search dramas by keyword</p>
+                                    <div class="params">
+                                        <span class="param">keyword <em>(required)</em></span>
+                                        <span class="param">log <em>(boolean)</em></span>
+                                    </div>
+                                    <div class="actions">
+                                        <button class="btn btn-sm" onclick="testSearch()">
+                                            <i class="fas fa-play"></i> Test
+                                        </button>
+                                        <input type="text" id="searchKeyword" placeholder="Keyword" value="love">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Hot Search -->
+                            <div class="endpoint-item">
+                                <div class="method get">GET</div>
+                                <div class="endpoint-info">
+                                    <code>/api/search/hot</code>
+                                    <p>Get trending search terms</p>
+                                    <div class="params">
+                                        <span class="param">log <em>(boolean)</em></span>
+                                    </div>
+                                    <div class="actions">
+                                        <button class="btn btn-sm" onclick="testHotSearch()">
+                                            <i class="fas fa-play"></i> Test
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Server Information -->
+                <section class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-info-circle"></i> Server Information</h2>
+                        <button class="btn-icon" onclick="refreshServerInfo()">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="server-stats">
+                            <div class="stat">
+                                <i class="fas fa-microchip"></i>
+                                <div>
+                                    <small>Memory Usage</small>
+                                    <strong id="memoryUsage">-</strong>
+                                </div>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-database"></i>
+                                <div>
+                                    <small>Endpoints</small>
+                                    <strong id="endpointCount">10</strong>
+                                </div>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-code-branch"></i>
+                                <div>
+                                    <small>Node Version</small>
+                                    <strong id="nodeVersion">-</strong>
+                                </div>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-plug"></i>
+                                <div>
+                                    <small>Environment</small>
+                                    <strong id="environment">-</strong>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="config-info">
+                            <h3><i class="fas fa-cog"></i> Configuration</h3>
+                            <pre id="configInfo">Loading config from config.js...</pre>
+                            <button class="btn btn-outline full-width" onclick="loadConfig()">
+                                <i class="fas fa-redo"></i> Reload Config
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <i class="fas fa-theater-masks"></i>
+                    <span>DramaBox API Documentation</span>
+                </div>
+                <div class="footer-meta">
+                    <p>Powered by <strong>RSMEDIAZERO</strong> • Using <code>config.js</code></p>
+                    <p>Repository: <a href="https://github.com/diena742/dbox-doc" target="_blank">diena742/dbox-doc</a></p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p id="loadingText">Loading...</p>
+    </div>
+
+    <!-- Notifications -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <!-- JavaScript -->
+    <script src="/script.js"></script>
+    <script>
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initDocumentation();
+        });
+    </script>
+</body>
+</html>
